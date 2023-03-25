@@ -2,7 +2,7 @@ defmodule Moul do
   @moduledoc """
   Opinionated image resizing library
 
-  > This package required static binary `https://github.com/moul-co/moul/releases` >= `v5.0.0-rc.5` in `PATH`.
+  > This package required static binary `https://github.com/moul-co/moul/releases` >= `v5.0.0-rc.5` in `$PATH`.
 
   There are 2 resizing options:
 

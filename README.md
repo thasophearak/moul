@@ -4,7 +4,7 @@ Opinionated image resizing library.
 
 ## Installation
 
-> This package required static binary `https://github.com/moul-co/moul/releases` >= `v5.0.0-rc.5` in `PATH`.
+> This package required static binary `https://github.com/moul-co/moul/releases` >= `v5.0.0-rc.5` in `$PATH`.
 
 The package can be installed by adding `moul` to your list of dependencies in `mix.exs`:
 
