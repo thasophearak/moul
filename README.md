@@ -11,9 +11,16 @@ The package can be installed by adding `moul` to your list of dependencies in `m
 ```elixir
 def deps do
   [
-    {:moul, "~> 0.2.0"}
+    {:moul, "~> 0.3.0"}
   ]
 end
+```
+
+By default, `moul` use https://github.com/evanw/thumbhash, but can also config to use https://github.com/woltapp/blurhash
+
+```elixir
+config :moul,
+  hash: "blurhash"
 ```
 
 ### Example
