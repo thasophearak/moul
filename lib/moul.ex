@@ -45,16 +45,24 @@ defmodule Moul do
     resize(in_file, out_path, :avatarize)
   end
 
-  def decode_blurhash(hash) when is_nil(hash), do: {:error, nil}
+  def decode_blurhash(hash, width, height) do
+    args = ["decode", "--blurhash", "#{hash}", "--width", "#{width}", "--height", "#{height}"]
 
-  def decode_blurhash(_hash) do
-    {:ok, ""}
+    IO.inspect(args)
+
+    case System.cmd("moul", args) do
+      {result, 0} ->
+        {:ok, result}
+
+      {_, exit_status} ->
+        {:error, exit_status}
+    end
   end
 
   def decode_thumbhash(hash) when is_nil(hash), do: {:error, nil}
 
   def decode_thumbhash(_hash) do
-    {:ok, ""}
+    {:ok, "not support yet"}
   end
 
   def to_data_url!(in_file) when is_nil(in_file), do: nil
@@ -68,20 +76,20 @@ defmodule Moul do
     "data:image/jpeg;charset=utf-8;base64,#{b64}"
   end
 
-  def get_ideal_dimention(%{width: width, height: height} = _current_dimention, _ideal_dimention)
+  def get_ideal_dimension(%{width: width, height: height} = _current_dimension, _ideal_dimension)
       when is_nil(width) or is_nil(height),
-      do: {:error, :need_current_dimention}
+      do: {:error, :need_current_dimension}
 
-  def get_ideal_dimention(
-        _current_dimention,
-        %{ideal_width: ideal_width, ideal_height: ideal_height} = _ideal_dimention
+  def get_ideal_dimension(
+        _current_dimension,
+        %{ideal_width: ideal_width, ideal_height: ideal_height} = _ideal_dimension
       )
       when not is_nil(ideal_width) and not is_nil(ideal_height),
       do: {:error, :not_ideal}
 
-  def get_ideal_dimention(
-        %{width: width, height: height} = _current_dimention,
-        %{ideal_width: ideal_width} = _ideal_dimention
+  def get_ideal_dimension(
+        %{width: width, height: height} = _current_dimension,
+        %{ideal_width: ideal_width} = _ideal_dimension
       )
       when not is_nil(ideal_width) do
     IO.inspect("#{width}:#{height}#{ideal_width}")
@@ -89,9 +97,9 @@ defmodule Moul do
     {:ok, %{ideal_width: 0, ideal_height: 0}}
   end
 
-  def get_ideal_dimention(
-        %{width: width, height: height} = _current_dimention,
-        %{ideal_height: ideal_height} = _ideal_dimention
+  def get_ideal_dimension(
+        %{width: width, height: height} = _current_dimension,
+        %{ideal_height: ideal_height} = _ideal_dimension
       )
       when not is_nil(ideal_height) do
     IO.inspect("#{width}:#{height}#{ideal_height}")
@@ -116,13 +124,12 @@ defmodule Moul do
     case System.cmd("moul", args) do
       {result, 0} ->
         meta = String.split(result, "\n", trim: true)
-        dimention = meta |> List.first() |> String.split(":", trim: true)
+        dimension = meta |> List.first() |> String.split(":", trim: true)
 
         {:ok,
-         %{hash: List.last(meta), width: List.first(dimention), height: List.last(dimention)}}
+         %{hash: List.last(meta), width: List.first(dimension), height: List.last(dimension)}}
 
-      {err, exit_status} ->
-        IO.inspect(err)
+      {_, exit_status} ->
         {:error, exit_status}
     end
   end
