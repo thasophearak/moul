@@ -2,6 +2,8 @@ defmodule Moul do
   @moduledoc """
   Opinionated image resizing library
 
+  > This package required static binary `https://github.com/moul-co/moul/releases` in PATH, >= v5.0.0-rc.5
+
   There are 2 resizing options:
 
   - `moulify/2` general use, will maintain aspect ratio, make different size for `srcset`.
