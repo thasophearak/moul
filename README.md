@@ -1,11 +1,12 @@
 # Moul
 
-**TODO: Add description**
+Opinionated image resizing library.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `moul` to your list of dependencies in `mix.exs`:
+This package required static binary `https://github.com/moul-co/moul/releases` in PATH.
+
+The package can be installed by adding `moul` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -70,8 +71,6 @@ File created:
 | <img src="test/images/profile/xl.jpeg" width="300" />                      | <img src="test/images/profile/xs-blurhash.jpeg" width="300" />                      | <img src="test/images/profile/xs-thumbhash.jpeg" width="300" />                      |
 | <img src="test/images/DSCF0527/xl.jpeg" width="300" />                     | <img src="test/images/DSCF0527/xs-blurhash.jpeg" width="300" />                     | <img src="test/images/DSCF0527/xs-thumbhash.jpeg" width="300" />                     |
 
-###
+### Documentation
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/moul>.
+Documentation can be found here: https://hexdocs.pm/moul
