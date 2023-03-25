@@ -4,10 +4,10 @@ defmodule Moul do
 
   There are 2 resizing options:
 
-  - moulify general use, will maintain aspect ratio, make different size for `srcset`.
-  - avatarize for resize avatar with squre crop with center anchor, which also make different size for `srcset`.
+  - `moulify/2` general use, will maintain aspect ratio, make different size for `srcset`.
+  - `avatarize/2` for resize avatar with squre crop with center anchor, which also make different size for `srcset`.
 
-  There are also helpers to transform image to data URL to_data_url!.
+  There are also helpers to transform image to data URL `to_data_url!/1`.
 
   """
 
