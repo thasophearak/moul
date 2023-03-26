@@ -1,15 +1,28 @@
 defmodule Moul do
   @moduledoc """
-  Opinionated image resizing library
+  Opinionated Image Resizing Library
 
-  > This package required static binary `https://github.com/moul-co/moul/releases` >= `v5.0.0-rc.5` in `$PATH`.
+  > This package requires a static binary, `https://github.com/moul-co/moul/releases` >= `v5.0.0-rc.5` to be in `$PATH`.
 
-  There are 2 resizing options:
+  There are two resizing options:
 
-  - `moulify/2` general use, will maintain aspect ratio, make different size for `srcset`.
-  - `avatarize/2` for resize avatar with squre crop with center anchor, which also make different size for `srcset`.
+  - `moulify/2` For general use. This option maintains the aspect ratio and creates different sizes for `srcset`.
+  - `avatarize/2` For resizing avatars with square crop and center anchor. This option also creates different sizes for `srcset`.
 
-  There are also helpers to transform image to data URL `to_data_url!/1`.
+  In addition, there are helper functions available for converting to data URLs: `decode_blurhash/3`, `decode_thumbhash/1`, and `to_data_url!/1`.
+
+
+  There are two hashing options available:
+
+  - Blurhash [https://github.com/woltapp/blurhash](https://github.com/woltapp/blurhash)
+  - Thumbhash [https://github.com/evanw/thumbhash](https://github.com/evanw/thumbhash)
+
+  By default, `Moul` uses `Thumbhash`, but it can also be configured to use `Blurhash`.
+
+  ```elixir
+  config :moul,
+    hash: "blurhash"
+  ```
 
   """
 
@@ -63,8 +76,11 @@ defmodule Moul do
     resize(in_file, out_path, :avatarize)
   end
 
+  def decode_blurhash(hash, width, height) when is_nil(hash) or is_nil(width) or is_nil(height),
+    do: {:error, nil}
+
   @doc """
-  Decode blurhash
+  Decode blurhash and return data URL
 
   ## Examples
 
@@ -86,8 +102,25 @@ defmodule Moul do
 
   def decode_thumbhash(hash) when is_nil(hash), do: {:error, nil}
 
-  def decode_thumbhash(_hash) do
-    {:ok, "not support yet"}
+  @doc """
+  Decode thumbhash and return data URL
+
+  ## Examples
+
+      iex> Moul.decode_thumbhash("GwgSFwKLZYZ/eHZHZ1aWZ4iHyAgpjaAC")
+      {:ok,
+        "data:image/jpeg;charset=utf-8;base64,/9j/2wCEAAIBAQEBAQIBAQECAgICAgQDAgICAgUEBAMEBgUGBgYFBgYGBwkIBgcJBwYGCAsICQoKCgoKBggLDAsKDAkKCgoBAgICAgICBQMDBQoHBgcKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCv/AABEIACAAIAMBIgACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/APcP+COn7HviXwnMPttk6/Va7P8A4Ksfsf6r4vTZHAxJHpX0n+z78aPhx8LbV5bbyEwOxArxL9ub9vbwTd3jQm4iIXpyKrB8RxUjfE5RJo+OPgP+xle+CLA3d2hULzyK+iPgzZab4fvDbPcqCvBGa+c/ir/wUU8NeH/DEwsLiNTtOMNXz94G/wCCjupax4klNpdMRvPQ19Rh+JoKO587XyWTke0+Ev2wZfEcDQ2urk7h2krwH9rL4l6rfTPcPqDnPT5q8P8A2OfE+u+Ir9Y57piCe5r0r9qHwxdjSPO3nO3rX5Lh8JJM/Qa2Ji0fPPxE8ZXGpaW8Et+xB6/NV79mDS9HudUaW7uRknu1cL4q8P6jLayfvDxnvTPg9NrGi6kwjuGHPrXtU8PNLc8ydWLZ/9k="}
+  """
+  def decode_thumbhash(hash) do
+    args = ["decode", "--thumbhash", "#{hash}"]
+
+    case System.cmd("moul", args) do
+      {result, 0} ->
+        {:ok, result}
+
+      {_, exit_status} ->
+        {:error, exit_status}
+    end
   end
 
   @doc """

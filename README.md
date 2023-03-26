@@ -1,22 +1,27 @@
 # Moul
 
-Opinionated image resizing library.
+Opinionated Image Resizing Library
 
 ## Installation
 
-> This package required static binary `https://github.com/moul-co/moul/releases` >= `v5.0.0-rc.5` in `$PATH`.
+> This package requires a static binary, `https://github.com/moul-co/moul/releases` >= `v5.0.0-rc.5` to be in `$PATH`.
 
 The package can be installed by adding `moul` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:moul, "~> 0.3.0"}
+    {:moul, "~> 0.4.0"}
   ]
 end
 ```
 
-By default, `moul` use https://github.com/evanw/thumbhash, but can also config to use https://github.com/woltapp/blurhash
+There are two hashing options available:
+
+- BlurHash [https://github.com/woltapp/blurhash](https://github.com/woltapp/blurhash)
+- ThumbHash [https://github.com/evanw/thumbhash](https://github.com/evanw/thumbhash)
+
+By default, `moul` uses `ThumbHash`, but it can also be configured to use `BlurHash`.
 
 ```elixir
 config :moul,
