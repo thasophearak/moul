@@ -17,7 +17,7 @@ defmodule Moul do
   - BlurHash [https://github.com/woltapp/blurhash](https://github.com/woltapp/blurhash)
   - ThumbHash [https://github.com/evanw/thumbhash](https://github.com/evanw/thumbhash)
 
-  By default, `moul` uses `ThumbHash`, but it can also be configured to use `BlurHash`.
+  By default, `moul` uses ThumbHash, but it can also be configured to use BlurHash.
 
   ```elixir
   config :moul,
@@ -31,10 +31,10 @@ defmodule Moul do
   @doc """
   Resize image at max 4096px at the long end with few additional sizes
 
-  xl:4096
-  lg:2048
-  md:1024
-  xs:32
+  - xl:4096
+  - lg:2048
+  - md:1024
+  - xs:32
 
   xs:32 is decoded hash
 
@@ -55,10 +55,10 @@ defmodule Moul do
   @doc """
   Crop square image at max 512px with few additional sizes
 
-  xl:512
-  lg:256
-  md:128
-  xs:32
+  - xl:512
+  - lg:256
+  - md:128
+  - xs:32
 
   xs:32 is decoded hash
 

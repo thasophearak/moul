@@ -21,7 +21,7 @@ There are two hashing options available:
 - BlurHash [https://github.com/woltapp/blurhash](https://github.com/woltapp/blurhash)
 - ThumbHash [https://github.com/evanw/thumbhash](https://github.com/evanw/thumbhash)
 
-By default, `moul` uses `ThumbHash`, but it can also be configured to use `BlurHash`.
+By default, `moul` uses ThumbHash, but it can also be configured to use BlurHash.
 
 ```elixir
 config :moul,
