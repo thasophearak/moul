@@ -14,10 +14,10 @@ defmodule Moul do
 
   There are two hashing options available:
 
-  - Blurhash [https://github.com/woltapp/blurhash](https://github.com/woltapp/blurhash)
-  - Thumbhash [https://github.com/evanw/thumbhash](https://github.com/evanw/thumbhash)
+  - BlurHash [https://github.com/woltapp/blurhash](https://github.com/woltapp/blurhash)
+  - ThumbHash [https://github.com/evanw/thumbhash](https://github.com/evanw/thumbhash)
 
-  By default, `Moul` uses `Thumbhash`, but it can also be configured to use `Blurhash`.
+  By default, `moul` uses `ThumbHash`, but it can also be configured to use `BlurHash`.
 
   ```elixir
   config :moul,
